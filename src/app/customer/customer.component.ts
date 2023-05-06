@@ -24,8 +24,8 @@ export class CustomerComponent {
     birthdateCustomer: '20/09/1983',
     dateCreatedCustomer: '',
     monthlyIncomeCustomer: '10',
-    cpfCustomer: '50876423063',
-    emailCustomer: 'abcd@teste.com',
+    cpfCustomer: '03821827076',
+    emailCustomer: 'abcde@teste.com',
     passwordCustomer: '123',
     statusCustomer: true
   }
