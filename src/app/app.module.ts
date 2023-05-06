@@ -7,6 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { DatePipe } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,11 +32,16 @@ import { CustomerService } from './service/customer.service';
     MatDividerModule,
     MatToolbarModule,
     MatInputModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
-    CustomerService
+    CustomerService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
