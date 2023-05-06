@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {};","map":{"version":3,"mappings":"AAAA,OAAO,MAAMA,WAAW,GAAG,EAAE","names":["environment"],"sourceRoot":"","sources":["/Users/tiago/AngularProjects/front-app-with-angular/src/environments/environment.development.ts"],"sourcesContent":["export const environment = {};\n"]},"metadata":{},"sourceType":"module","externalDependencies":[]}
