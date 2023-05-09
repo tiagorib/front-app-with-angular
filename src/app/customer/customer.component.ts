@@ -11,49 +11,51 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CustomerComponent {
 
+  success: boolean = false;
+  errors!: String[];
+
   constructor(private service: CustomerService){
   }
 
   ngOnInit(): void {
-    this.saveCustomer();
+    
   }
 
   customer: Customer = {
     idCustomer: '',
-    firstNameCustomer: 'Jefferson',
-    lastNameCustomer: 'Restani',
-    birthdateCustomer: '21/04/1979',
+    firstNameCustomer: '',
+    lastNameCustomer: '',
+    birthdateCustomer: '',
     dateCreatedCustomer: '',
-    monthlyIncomeCustomer: '1000',
-    cpfCustomer: '80456061002',
-    emailCustomer: 'jefferson@teste.com',
-    passwordCustomer: '123456',
+    monthlyIncomeCustomer: '',
+    cpfCustomer: '',
+    emailCustomer: '',
+    passwordCustomer: '',
     statusCustomer: true
   }
 
   saveCustomer() {
-    this.service.save(this.customer).subscribe(response => {
-      console.log(response)
-    })
-  }
-
-  /*saveCustomer() {
-    
     const datePipe = new DatePipe('en-US');
-    this.customer.birthdateCustomer = datePipe.transform(this.customer.birthdateCustomer, 'dd/MM/yyyy');
+    this.customer.birthdateCustomer = datePipe.transform(
+      this.customer.birthdateCustomer, 'dd/MM/yyyy');
     
-    
-    this.service.save(this.customer).subscribe({next: () => {
-    this.toast.success('O cliente '+ this.customer.firstNameCustomer +' '+ this.customer.lastNameCustomer +' foi cadastrado com sucesso!', 'Cadastro');      
+    this.service.save(this.customer).subscribe({next: response => {
+      this.success = true;
+      this.errors = [];
+    //this.toast.success('O cliente '+ this.customer.firstNameCustomer +' '+ this.customer.lastNameCustomer +' foi cadastrado com sucesso!', 'Sucesso!!!');      
     }, error: ex => {
       if (ex.error.errors) {
+        this.errors = ex.error.errors;
+        this.success = false;
         ex.error.errors.forEach((element:any) => {
-          this.toast.error(element.message, 'Erro');
+          //this.toast.error(element.message, 'Atenção!!!');                    
         });
       } else {
-        this.toast.error(ex.error.message, 'Erro');
+          this.success = false;
+          this.errors = ex.error.errors;
+        //this.toast.error(ex.error.message, 'Atenção!');
       }
     }})
-  }*/
+  }
 
 }
