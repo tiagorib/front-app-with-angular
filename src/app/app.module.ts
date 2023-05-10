@@ -11,6 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DatePipe } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +38,9 @@ import { CustomerService } from './service/customer.service';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTabsModule,
+    MatTableModule,
+    MatCardModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
