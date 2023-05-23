@@ -17,4 +17,20 @@ export class CustomerService {
     return this.http.post<Customer[]>(this.url+'/customer/create', customer);
   }
 
+  list() : Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.url+'/customer/list');
+  }
+
+  delete(idCustomer: any): Observable<Customer> {
+    return this.http.delete<Customer>(`${this.url}/customer/delete/${idCustomer}`);
+  }
+
+  findById(id: number): Observable<Customer> {
+    return this.http.get<any>(this.url+'/findCustomer/${id}');
+  }
+
+  update(customer: Customer): Observable<Customer[]> {
+    return this.http.put<Customer[]>(this.url+'/update/${customer.idCustomer}', customer);
+  }
+
 }
