@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +42,7 @@ import { CustomerService } from './service/customer.service';
     MatTabsModule,
     MatTableModule,
     MatCardModule,
+    MatPaginatorModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
