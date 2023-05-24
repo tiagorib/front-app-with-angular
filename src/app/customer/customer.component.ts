@@ -86,11 +86,11 @@ export class CustomerComponent implements OnInit {
     }
   }
 
-  /*findCustomer(customer: Customer) {    
+  findCustomer(customer: Customer) {    
     this.service.findById(customer.idCustomer).subscribe((response: any) => {
       this.customer = response.result as Customer;
-      matt
+  
     });
-  }*/
+  }
   
 }
