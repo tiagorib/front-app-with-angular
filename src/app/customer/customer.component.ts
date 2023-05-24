@@ -15,7 +15,7 @@ export class CustomerComponent implements OnInit {
 
   success: boolean = false;
   errors!: String[];
-  displayedColumns: string[] = ['idCustomer', 'firstNameCustomer', 'lastNameCustomer', 'cpfCustomer', 'birthdateCustomer', 'dateCreatedCustomer', 'monthlyIncomeCustomer', 'emailCustomer', 'statusCustomer', 'deleteCustomer'];
+  displayedColumns: string[] = ['idCustomer', 'firstNameCustomer', 'lastNameCustomer', 'cpfCustomer', 'birthdateCustomer', 'dateCreatedCustomer', 'monthlyIncomeCustomer', 'emailCustomer', 'statusCustomer', 'deleteCustomer', 'findCustomer'];
   ELEMENT_DATA: Customer[] = [];
   message: string = '';
   dataSource = new MatTableDataSource<Customer>(this.ELEMENT_DATA);
@@ -69,7 +69,7 @@ export class CustomerComponent implements OnInit {
 
   listCustomer() {
     this.service.list().subscribe((response: any) => {
-      this.ELEMENT_DATA = response.result as Customer[]; // Verifique o tipo e faça a conversão
+      this.ELEMENT_DATA = response.result as Customer[];
       this.dataSource = new MatTableDataSource<Customer>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
     });
@@ -86,4 +86,11 @@ export class CustomerComponent implements OnInit {
     }
   }
 
+  /*findCustomer(customer: Customer) {    
+    this.service.findById(customer.idCustomer).subscribe((response: any) => {
+      this.customer = response.result as Customer;
+      matt
+    });
+  }*/
+  
 }
