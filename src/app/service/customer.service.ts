@@ -25,12 +25,12 @@ export class CustomerService {
     return this.http.delete<Customer>(`${this.url}/customer/delete/${idCustomer}`);
   }
 
-  findById(id: number): Observable<Customer> {
-    return this.http.get<any>(this.url+'/findCustomer/${id}');
+  findById(idCustomer: any): Observable<Customer> {
+    return this.http.get<any>(`${this.url}/customer/findCustomer/${idCustomer}`);
   }
 
   update(customer: Customer): Observable<Customer[]> {
-    return this.http.put<Customer[]>(this.url+'/update/${customer.idCustomer}', customer);
+    return this.http.put<Customer[]>(this.url+'/customer/update/${customer.idCustomer}', customer);
   }
 
 }
