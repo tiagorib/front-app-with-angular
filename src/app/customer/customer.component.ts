@@ -43,28 +43,19 @@ export class CustomerComponent implements OnInit {
     statusCustomer: true
   }
 
-  saveCustomer() {
+  saveCustomer() {    
     const datePipe = new DatePipe('en-US');
-    this.customer.birthdateCustomer = datePipe.transform(
-      this.customer.birthdateCustomer, 'dd/MM/yyyy');
+    this.customer.birthdateCustomer = datePipe.transform(this.customer.birthdateCustomer, 'dd/MM/yyyy');
     
-    this.service.save(this.customer).subscribe({next: response => {
+    this.service.save(this.customer).subscribe((response: any) => {
       this.success = true;
       this.errors = [];
-    //this.toast.success('O cliente '+ this.customer.firstNameCustomer +' '+ this.customer.lastNameCustomer +' foi cadastrado com sucesso!', 'Sucesso!!!');      
-    }, error: ex => {
-      if (ex.error.errors) {
-        this.errors = ex.error.errors;
-        this.success = false;
-        ex.error.errors.forEach((element:any) => {
-          //this.toast.error(element.message, 'Atenção!!!');                    
-        });
-      } else {
-          this.success = false;
-          this.errors = ex.error.errors;
-        //this.toast.error(ex.error.message, 'Atenção!');
-      }
-    }})
+      this.customer = response.result as Customer;       
+      var date = this.customer.birthdateCustomer;
+      var newDate = date.split("/").reverse().join("-");
+      this.customer.birthdateCustomer = newDate; 
+      this.listCustomer();   
+    });
   }
 
   listCustomer() {
@@ -88,8 +79,10 @@ export class CustomerComponent implements OnInit {
 
   findCustomer(customer: Customer) {    
     this.service.findById(customer.idCustomer).subscribe((response: any) => {
-      this.customer = response.result as Customer;
-  
+      this.customer = response.result as Customer;       
+      var date = this.customer.birthdateCustomer;
+      var newDate = date.split("/").reverse().join("-");
+      this.customer.birthdateCustomer = newDate;
     });
   }
   
