@@ -15,18 +15,30 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomerComponent } from './customer/customer.component';
-import { CustomerService } from './service/customer.service'; 
+import { CustomerService } from './service/customer.service';
+import { CategoryComponent } from './category/category.component';
+import { ProductComponent } from './product/product.component';
+import { MenubarComponent } from './menubar/menubar.component';
+import { HomeComponent } from './home/home.component'; 
+import { CategoryService } from './service/category.service';
+import { ProductService } from './service/product.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomerComponent
+    CustomerComponent,
+    CategoryComponent,
+    ProductComponent,
+    MenubarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -43,12 +55,16 @@ import { CustomerService } from './service/customer.service';
     MatTableModule,
     MatCardModule,
     MatPaginatorModule,
+    MatMenuModule,
+    MatSelectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
   providers: [
     CustomerService,
+    CategoryService,
+    ProductService,
     DatePipe
   ],
   bootstrap: [AppComponent]

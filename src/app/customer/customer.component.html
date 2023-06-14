@@ -63,7 +63,7 @@
                 <ng-container matColumnDef="deleteCustomer">
                     <th mat-header-cell *matHeaderCellDef> Excluir </th>
                     <td mat-cell *matCellDef="let customer">
-                        <a href="#" (click)="deleteCustomer(customer)">
+                        <a href="#" routerLink="customer" (click)="deleteCustomer(customer)">
                             <mat-icon>delete-forever</mat-icon>
                         </a>
                     </td>
@@ -72,7 +72,7 @@
                 <ng-container matColumnDef="findCustomer">
                     <th mat-header-cell *matHeaderCellDef> Editar </th>
                     <td mat-cell *matCellDef="let customer">
-                        <a href="#" (click)="tabGroup.selectedIndex=1;findCustomer(customer);">
+                        <a href="#" routerLink="customer" (click)="tabGroup.selectedIndex=1;findCustomer(customer);">
                             <mat-icon>mode_edit</mat-icon>
                         </a>
                     </td>

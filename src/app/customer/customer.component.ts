@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CustomerService } from '../service/customer.service';
 import { Customer } from '../model/customer';
 import { DatePipe } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
