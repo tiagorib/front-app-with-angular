@@ -82,6 +82,7 @@ export class ProductComponent {
     });
   }
 
+  // uai porra
   clearProduct(){
     this.product = {
       idProduct: '',
