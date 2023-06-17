@@ -81,7 +81,8 @@ export class ProductComponent {
       this.clearProduct;
     });
   }
-
+  
+  //clear func
   clearProduct(){
     this.product = {
       idProduct: '',

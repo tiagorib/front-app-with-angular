@@ -28,7 +28,7 @@ export class ProductService {
   findById(idProduct: any): Observable<Product> {
     return this.http.get<any>(`${this.url}/product/findProduct/${idProduct}`);
   }
-
+  //Adjust url
   update(product: Product): Observable<Product[]> {
     return this.http.put<Product[]>(this.url+`/product/update`, product);
   }

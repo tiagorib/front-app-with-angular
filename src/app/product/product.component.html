@@ -4,7 +4,7 @@
     Produtos
   </span>
 </mat-toolbar>
-
+<!-- Alter button -->
 <mat-tab-group class="full-width" #tabGroup="matTabGroup">
   <mat-tab>
     <ng-template mat-tab-label>
@@ -12,12 +12,7 @@
       Todos
     </ng-template>
     <mat-card class="full-width">
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        class="full-width"
-        matTableResponsive
-      >
+      <table mat-table [dataSource]="dataSource" class="full-width" matTableResponsive>
         <ng-container matColumnDef="idProduct">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let product">{{ product.idProduct }}</td>
@@ -75,11 +70,7 @@
         <ng-container matColumnDef="findProduct">
           <th mat-header-cell *matHeaderCellDef>Editar</th>
           <td mat-cell *matCellDef="let product">
-            <a
-              href="#"
-              routerLink="product"
-              (click)="tabGroup.selectedIndex = 1; findProduct(product)"
-            >
+            <a href="#" routerLink="product" (click)="tabGroup.selectedIndex = 1; findProduct(product)">
               <mat-icon>mode_edit</mat-icon>
             </a>
           </td>
@@ -89,10 +80,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 20, 50]"
-        showFirstLastButtons
-      ></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
     </mat-card>
   </mat-tab>
   <mat-tab>
@@ -106,75 +94,33 @@
         <div>
           <mat-form-field class="full-width">
             <mat-label> Nome: </mat-label>
-            <input
-              [(ngModel)]="product.nameProduct"
-              type="text"
-              matInput
-              name="nameProduct"
-              placeholder="Digite o nome do produto"
-              required
-            />
+            <input [(ngModel)]="product.nameProduct" type="text" matInput name="nameProduct" placeholder="Digite o nome do produto" required />
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>Descrição: </mat-label>
-            <input
-              [(ngModel)]="product.descriptionProduct"
-              type="text"
-              matInput
-              name="descriptionProduct"
-              placeholder="Digite a descrição do produto"
-              required
-            />
+            <input [(ngModel)]="product.descriptionProduct" type="text" matInput name="descriptionProduct" placeholder="Digite a descrição do produto" required />
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>Preço de Custo: R$ </mat-label>
-            <input
-              [(ngModel)]="product.costPriceProduct"
-              type="number"
-              matInput
-              name="costPriceProduct"
-              placeholder="Digite o preço de custo (R$)"
-              required
-            />
+            <input [(ngModel)]="product.costPriceProduct" type="number" matInput name="costPriceProduct" placeholder="Digite o preço de custo (R$)" required />
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>Preço de Venda: R$ </mat-label>
-            <input
-              [(ngModel)]="product.amountProduct"
-              type="number"
-              matInput
-              name="amountProduct"
-              placeholder="Digite o preço do produto (R$)"
-              required
-            />
+            <input [(ngModel)]="product.amountProduct" type="number" matInput name="amountProduct" placeholder="Digite o preço do produto (R$)" required />
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>Data de Cadastro: </mat-label>
-            <input
-              [(ngModel)]="product.dateCreatedProduct"
-              type="date"
-              matInput
-              name="dateCreatedProduct"
-              placeholder="Digite a data de cadastro do produto"
-              required
-            />
+            <input [(ngModel)]="product.dateCreatedProduct" type="date" matInput name="dateCreatedProduct" placeholder="Digite a data de cadastro do produto" required />
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>Categoria: </mat-label>
             <mat-select [(ngModel)]="product.idCategory" name="category">
-              <mat-option
-                *ngFor="let category of categories"
-                [value]="category.idCategory"
-              >
+              <mat-option *ngFor="let category of categories" [value]="category.idCategory">
                 {{ category.nameCategory }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <button
-            (click)="product.idProduct ? editProduct() : saveProduct()"
-            mat-raised-button
-            color="primary"
-          >
+          <button (click)="product.idProduct ? editProduct() : saveProduct()" mat-raised-button color="primary">
             Salvar
           </button>
         </div>

@@ -28,7 +28,7 @@ export class CategoryService {
   findById(idCategory: any): Observable<Category> {
     return this.http.get<any>(`${this.url}/category/findCategory/${idCategory}`);
   }
-
+  //Adjust url
   update(category: Category): Observable<Category[]> {
     return this.http.put<Category[]>(this.url+`/category/update`, category);
   }

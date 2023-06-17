@@ -57,7 +57,7 @@ export class CategoryComponent implements OnInit {
       this.clearCategory(); 
     });
   }
-
+//Clear function
   clearCategory(){
     this.category = {
       idCategory: '',
