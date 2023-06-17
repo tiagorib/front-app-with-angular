@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CategoryService } from '../service/category.service';
 import { DatePipe } from '@angular/common';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-category',
@@ -41,8 +42,28 @@ export class CategoryComponent implements OnInit {
       this.success = true;
       this.errors = [];
       this.category = response.result as Category;             
-      this.listCategory();   
+      this.listCategory();
+      this.clearCategory();  
     });
+  }
+
+  updateCategory() {        
+    
+    this.service.update(this.category).subscribe((response: any) => {
+      this.success = true;
+      this.errors = [];
+      this.category = response.result as Category;             
+      this.listCategory();
+      this.clearCategory(); 
+    });
+  }
+
+  clearCategory(){
+    this.category = {
+      idCategory: '',
+      nameCategory: '',
+      descriptionCategory: ''
+    }
   }
 
   listCategory() {
