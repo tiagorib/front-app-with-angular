@@ -4,12 +4,14 @@ import { Customer } from '../model/customer';
 import { DatePipe } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
+
 export class CustomerComponent implements OnInit {
 
   success: boolean = false;
@@ -20,10 +22,11 @@ export class CustomerComponent implements OnInit {
   dataSource = new MatTableDataSource<Customer>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('customerForm') customerForm!: NgForm;
 
   constructor(
     private service: CustomerService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.listCustomer();
@@ -42,19 +45,32 @@ export class CustomerComponent implements OnInit {
     statusCustomer: true
   }
 
-  saveCustomer() {    
+  saveCustomer() {
     const datePipe = new DatePipe('en-US');
     this.customer.birthdateCustomer = datePipe.transform(this.customer.birthdateCustomer, 'dd/MM/yyyy');
-    
-    this.service.save(this.customer).subscribe((response: any) => {
-      this.success = true;
-      this.errors = [];
-      this.customer = response.result as Customer;       
-      var date = this.customer.birthdateCustomer;
-      var newDate = date.split("/").reverse().join("-");
-      this.customer.birthdateCustomer = newDate; 
-      this.listCustomer();   
-    });
+    if (this.customer.idCustomer) {
+      this.service.update(this.customer).subscribe((response: any) => {
+        this.success = true;
+        this.errors = [];
+        this.customer = response.result as Customer;
+        var date = this.customer.birthdateCustomer;
+        var newDate = date.split("/").reverse().join("-");
+        this.customer.birthdateCustomer = newDate;
+        this.listCustomer();
+        this.emptyForm();
+      });
+    } else {
+      this.service.save(this.customer).subscribe((response: any) => {
+        this.success = true;
+        this.errors = [];
+        this.customer = response.result as Customer;
+        var date = this.customer.birthdateCustomer;
+        var newDate = date.split("/").reverse().join("-");
+        this.customer.birthdateCustomer = newDate;
+        this.listCustomer();
+        this.emptyForm();
+      });
+    }
   }
 
   listCustomer() {
@@ -63,7 +79,7 @@ export class CustomerComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Customer>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
     });
-    
+
   }
 
   deleteCustomer(customer: Customer) {
@@ -76,13 +92,19 @@ export class CustomerComponent implements OnInit {
     }
   }
 
-  findCustomer(customer: Customer) {    
+  findCustomer(customer: Customer) {
     this.service.findById(customer.idCustomer).subscribe((response: any) => {
-      this.customer = response.result as Customer;       
+      this.customer = response.result as Customer;
       var date = this.customer.birthdateCustomer;
       var newDate = date.split("/").reverse().join("-");
       this.customer.birthdateCustomer = newDate;
+      this.success = false;
     });
+  }
+
+  emptyForm() {
+    this.customerForm.resetForm();
+    this.customer.idCustomer = '';
   }
   
 }
