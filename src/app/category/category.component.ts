@@ -3,13 +3,14 @@ import { Category } from '../model/category';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CategoryService } from '../service/category.service';
-import { DatePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
+
 export class CategoryComponent implements OnInit {
 
   success: boolean = false;
@@ -19,30 +20,37 @@ export class CategoryComponent implements OnInit {
   message: string = '';
   dataSource = new MatTableDataSource<Category>(this.ELEMENT_DATA);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor(
-    private service: CategoryService
-  ){}
-
-  ngOnInit(): void {
-    this.listCategory();
-  }
-
   category: Category = {
     idCategory: '',
     nameCategory: '',
     descriptionCategory: ''
   }
 
-  saveCategory() {        
-    
-    this.service.save(this.category).subscribe((response: any) => {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('categoryForm') categoryForm!: NgForm;
+
+  constructor(
+    private service: CategoryService
+  ) { }
+
+  ngOnInit(): void {
+    this.listCategory();
+  }
+
+  saveCategory() {
+    const handleSuccessSaveOrUpdate = (response: any) => {
       this.success = true;
       this.errors = [];
-      this.category = response.result as Category;             
-      this.listCategory();   
-    });
+      this.category = response.result as Category;
+      this.listCategory();
+      this.emptyForm();
+    };
+
+    if (this.category.idCategory) {
+      this.service.update(this.category).subscribe(handleSuccessSaveOrUpdate);
+    } else {
+      this.service.save(this.category).subscribe(handleSuccessSaveOrUpdate);
+    }
   }
 
   listCategory() {
@@ -51,7 +59,6 @@ export class CategoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Category>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
     });
-    
   }
 
   deleteCategory(category: Category) {
@@ -64,10 +71,18 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  findCategory(category: Category) {    
+  findCategory(category: Category) {
     this.service.findById(category.idCategory).subscribe((response: any) => {
-      this.category = response.result as Category;             
+      this.category = response.result as Category;
+      this.success = false;
     });
   }
 
+  emptyForm() {
+    this.categoryForm.reset();
+
+    this.category.idCategory = '';
+    this.category.nameCategory = '';
+    this.category.descriptionCategory = '';
+  }
 }

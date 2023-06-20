@@ -30,7 +30,7 @@ export class CategoryService {
   }
 
   update(category: Category): Observable<Category[]> {
-    return this.http.put<Category[]>(this.url+'/category/update/${category.idCategory}', category);
+    return this.http.put<Category[]>(this.url+'/category/update', category);
   }
 
 }

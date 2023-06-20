@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Product } from '../model/product';
+import { Product, ProductDTO } from '../model/product';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductService } from '../service/product.service';
 import { DatePipe } from '@angular/common';
 import { Category } from '../model/category';
 import { CategoryService } from '../service/category.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
@@ -22,9 +23,23 @@ export class ProductComponent {
   dataSource = new MatTableDataSource<Product>(this.ELEMENT_DATA);
 
   categories: Category[] = [];
-  category!: Category;
+
+  product: Product = {
+    idProduct: '',
+    nameProduct: '',
+    descriptionProduct: '',
+    costPriceProduct: '',
+    amountProduct: '',
+    dateCreatedProduct: '',
+    category: {
+      idCategory: '',
+      nameCategory: '',
+      descriptionCategory: ''
+    }
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('productForm') productForm!: NgForm;
 
   constructor(
     private service: ProductService,
@@ -38,29 +53,36 @@ export class ProductComponent {
     });
   }
 
-  product: Product = {
-    idProduct: '',
-    nameProduct: '',
-    descriptionProduct: '',
-    costPriceProduct: '',
-    amountProduct: '',
-    dateCreatedProduct: '',
-    idCategory: ''
-  }
-
-  saveProduct() {    
+  saveProduct() {
     const datePipe = new DatePipe('en-US');
     this.product.dateCreatedProduct = datePipe.transform(this.product.dateCreatedProduct, 'dd/MM/yyyy');
-    
-    this.service.save(this.product).subscribe((response: any) => {
+
+    const handleSuccessSaveOrUpdate = (response: any) => {
       this.success = true;
       this.errors = [];
-      this.product = response.result as Product;       
+      this.product = response.result as Product;
       var date = this.product.dateCreatedProduct;
       var newDate = date.split("/").reverse().join("-");
-      this.product.dateCreatedProduct = newDate; 
-      this.listProduct();   
-    });
+      this.product.dateCreatedProduct = newDate;
+      this.listProduct();
+      this.emptyForm();
+    };
+
+    const productDTO: ProductDTO = {
+      idProduct: this.product.idProduct,
+      nameProduct: this.product.nameProduct,
+      descriptionProduct: this.product.descriptionProduct,
+      costPriceProduct: this.product.costPriceProduct,
+      amountProduct: this.product.amountProduct,
+      dateCreatedProduct: this.product.dateCreatedProduct,
+      idCategory: this.product.category.idCategory
+    };
+
+    if (this.product.idProduct) {
+      this.service.update(productDTO).subscribe(handleSuccessSaveOrUpdate);
+    } else {
+      this.service.save(productDTO).subscribe(handleSuccessSaveOrUpdate);
+    }
   }
 
   listProduct() {
@@ -69,7 +91,7 @@ export class ProductComponent {
       this.dataSource = new MatTableDataSource<Product>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
     });
-    
+
   }
 
   deleteProduct(product: Product) {
@@ -82,13 +104,32 @@ export class ProductComponent {
     }
   }
 
-  findProduct(product: Product) {    
+  findProduct(product: Product) {
     this.service.findById(product.idProduct).subscribe((response: any) => {
-      this.product = response.result as Product;       
+      this.product = response.result as Product;
       var date = this.product.dateCreatedProduct;
       var newDate = date.split("/").reverse().join("-");
       this.product.dateCreatedProduct = newDate;
+      this.product.category = this.product.category;
+      this.success = false;
     });
   }
 
+  emptyForm() {
+    this.productForm.reset();
+
+    this.product = {
+      idProduct: '',
+      nameProduct: '',
+      descriptionProduct: '',
+      costPriceProduct: '',
+      amountProduct: '',
+      dateCreatedProduct: '',
+      category: {
+        idCategory: '',
+        nameCategory: '',
+        descriptionCategory: ''
+      }
+    };
+  }
 }

@@ -1,9 +1,21 @@
+import { Category } from "./category";
+
 export interface Product {
-    idProduct?: any;
+    idProduct: any;
     nameProduct: string;
     descriptionProduct: string;
     costPriceProduct: string;
     amountProduct: string;
     dateCreatedProduct: any;
-    idCategory: any;
+    category: Category;
+}
+
+export interface ProductDTO {
+    idProduct: any;
+    nameProduct: string;
+    descriptionProduct: string;
+    costPriceProduct: string;
+    amountProduct: string;
+    dateCreatedProduct: any;
+    idCategory: string;
 }

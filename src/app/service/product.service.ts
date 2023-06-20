@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { API_CONFIG } from '../config/api_config';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../model/product';
+import { Product, ProductDTO } from '../model/product';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,24 +13,24 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  save(product: Product) : Observable<Product[]> {
-    return this.http.post<Product[]>(this.url+'/product/create', product);
+  save(productDTO: ProductDTO) : Observable<Product[]> {
+    return this.http.post<Product[]>(this.url+'/product/create', productDTO);
   }
 
   list() : Observable<Product[]> {
     return this.http.get<Product[]>(this.url+'/product/list');
   }
 
-  delete(idProduct: any): Observable<Product> {
+  delete(idProduct: string): Observable<Product> {
     return this.http.delete<Product>(`${this.url}/product/delete/${idProduct}`);
   }
 
-  findById(idProduct: any): Observable<Product> {
+  findById(idProduct: string): Observable<Product> {
     return this.http.get<any>(`${this.url}/product/findProduct/${idProduct}`);
   }
 
-  update(product: Product): Observable<Product[]> {
-    return this.http.put<Product[]>(this.url+'/product/update/${product.idProduct}', product);
+  update(productDTO: ProductDTO): Observable<Product[]> {
+    return this.http.put<Product[]>(this.url+'/product/update', productDTO);
   }
 
 }

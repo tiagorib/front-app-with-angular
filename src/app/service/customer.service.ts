@@ -30,7 +30,7 @@ export class CustomerService {
   }
 
   update(customer: Customer): Observable<Customer[]> {
-    return this.http.put<Customer[]>(this.url+'/customer/update/${customer.idCustomer}', customer);
+    return this.http.put<Customer[]>(this.url+'/customer/update', customer);
   }
 
 }

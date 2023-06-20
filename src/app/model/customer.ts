@@ -1,5 +1,5 @@
 export interface Customer {
-    idCustomer?: any;
+    idCustomer: any;
     firstNameCustomer: string;
     lastNameCustomer: string;
     cpfCustomer: any;
