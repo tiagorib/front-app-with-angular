@@ -1,3 +1,4 @@
+import { Category } from './category';
 export interface Product {
     idProduct?: any;
     nameProduct: string;
@@ -6,4 +7,5 @@ export interface Product {
     amountProduct: string;
     dateCreatedProduct: any;
     idCategory: any;
+    category: Category
 }

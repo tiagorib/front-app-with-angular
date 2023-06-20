@@ -47,7 +47,7 @@
 
                 <ng-container matColumnDef="category">
                     <th mat-header-cell *matHeaderCellDef> Categoria </th>
-                    <td mat-cell *matCellDef="let product"> {{ product.nameCategory }} </td>
+                    <td mat-cell *matCellDef="let product"> {{ product.category.nameCategory }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="deleteProduct">
@@ -113,7 +113,7 @@
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Categoria: </mat-label>
-                        <mat-select [(ngModel)]="category" name="category">
+                        <mat-select [(ngModel)]="product.idCategory" name="category">
                             <mat-option *ngFor="let category of categories" [value]="category.idCategory">
                               {{ category.nameCategory }}
                             </mat-option>

@@ -1,10 +1,10 @@
+import { Category } from './../model/category';
 import { Component, ViewChild } from '@angular/core';
 import { Product } from '../model/product';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductService } from '../service/product.service';
 import { DatePipe } from '@angular/common';
-import { Category } from '../model/category';
 import { CategoryService } from '../service/category.service';
 
 @Component({
@@ -45,6 +45,7 @@ export class ProductComponent {
     costPriceProduct: '',
     amountProduct: '',
     dateCreatedProduct: '',
+    category: this.category,
     idCategory: ''
   }
 
@@ -84,8 +85,10 @@ export class ProductComponent {
 
   findProduct(product: Product) {    
     this.service.findById(product.idProduct).subscribe((response: any) => {
-      this.product = response.result as Product;       
+      this.product = response.result as Product;   
+      this.product.idCategory = this.product.category.idCategory  
       var date = this.product.dateCreatedProduct;
+      console.log(this.product)
       var newDate = date.split("/").reverse().join("-");
       this.product.dateCreatedProduct = newDate;
     });
