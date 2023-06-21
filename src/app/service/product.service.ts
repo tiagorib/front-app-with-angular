@@ -13,6 +13,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+
   save(productDTO: ProductDTO) : Observable<Product[]> {
     return this.http.post<Product[]>(this.url+'/product/create', productDTO);
   }
@@ -32,5 +33,4 @@ export class ProductService {
   update(product: Product): Observable<Product[]> {
     return this.http.put<Product[]>(this.url+'/product/update', product);
   }
-
 }

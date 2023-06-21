@@ -2,6 +2,28 @@
     width: 100%;
 }
 
-.half-width {
-    width: 50%;
+div{
+    padding-block: 2rem;
 }
+
+form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+span {
+    font-size: large;
+}
+
+#delete {
+    background-color: red;
+    border-radius: 10px;
+    border-color: red;
+}
+    
+
+#delete1{
+    color: white;
+}
+

@@ -1,17 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Category } from '../model/category';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CategoryService } from '../service/category.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
-export class CategoryComponent implements OnInit {
-
+export class CategoryComponent {
+  
   success: boolean = false;
   errors!: String[];
   displayedColumns: string[] = ['idCategory', 'nameCategory', 'descriptionCategory', 'deleteCategory', 'findCategory'];
@@ -20,11 +19,10 @@ export class CategoryComponent implements OnInit {
   dataSource = new MatTableDataSource<Category>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('categoryForm') categoryForm!: NgForm;
 
   constructor(
     private service: CategoryService
-  ) { }
+  ){}
 
   ngOnInit(): void {
     this.listCategory();
@@ -36,24 +34,14 @@ export class CategoryComponent implements OnInit {
     descriptionCategory: ''
   }
 
-  saveCategory() {
-    if (this.category.idCategory) {
-      this.service.update(this.category).subscribe((response: any) => {
-        this.success = true;
-        this.errors = [];
-        this.category = response.result as Category;
-        this.listCategory();
-        this.emptyForm();
-      });
-    } else {
-      this.service.save(this.category).subscribe((response: any) => {
-        this.success = true;
-        this.errors = [];
-        this.category = response.result as Category;
-        this.listCategory();
-        this.emptyForm();
-      });
-    }
+  saveCategory() {        
+    
+    this.service.save(this.category).subscribe((response: any) => {
+      this.success = true;
+      this.errors = [];
+      this.category = response.result as Category;             
+      this.listCategory();   
+    });
   }
 
   listCategory() {
@@ -62,7 +50,7 @@ export class CategoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Category>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
     });
-
+    
   }
 
   deleteCategory(category: Category) {
@@ -75,16 +63,10 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  findCategory(category: Category) {
+  findCategory(category: Category) {    
     this.service.findById(category.idCategory).subscribe((response: any) => {
-      this.category = response.result as Category;
-      this.success = false;
+      this.category = response.result as Category;             
     });
-  }
-
-  emptyForm() {
-    this.categoryForm.resetForm();
-    this.category.idCategory = '';
   }
 
 }

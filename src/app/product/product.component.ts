@@ -30,7 +30,7 @@ export class ProductComponent {
   constructor(
     private service: ProductService,
     private categoryService: CategoryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.listProduct();
@@ -53,7 +53,9 @@ export class ProductComponent {
     amountProduct: '',
     dateCreatedProduct: '',
     category: {
-      idCategory: ''
+      idCategory: '',
+      nameCategory: '',
+      descriptionCategory: ''
     }
   }
 
@@ -70,34 +72,39 @@ export class ProductComponent {
   saveProduct() {
     const datePipe = new DatePipe('en-US');
     this.productDTO.dateCreatedProduct = datePipe.transform(this.productDTO.dateCreatedProduct, 'dd/MM/yyyy');
+  
+    const handleResponse = (response: any) => {
+      this.success = true;
+      this.errors = [];
+      this.product = response.result as Product;
+      this.product.dateCreatedProduct = this.product.dateCreatedProduct.split("/").reverse().join("-");
+      this.listProduct();
+      this.emptyForm();
+    };
+  
     if (this.productDTO.idProduct) {
-      this.product.idProduct = this.productDTO.idProduct;
-      this.product.nameProduct = this.productDTO.nameProduct;
-      this.product.descriptionProduct = this.productDTO.descriptionProduct;
-      this.product.costPriceProduct = this.productDTO.costPriceProduct;
-      this.product.amountProduct = this.productDTO.amountProduct;
-      this.product.dateCreatedProduct = this.productDTO.dateCreatedProduct;
-      this.product.category.idCategory = this.productDTO.idCategory;
+      this.product = {
+        ...this.product,
+        ...this.productDTO,
+        category: {
+          idCategory: this.productDTO.idCategory,
+          nameCategory: '',
+          descriptionCategory: ''
+        }
+      };
+  
       this.service.update(this.product).subscribe((response: any) => {
-        this.success = true;
-        this.errors = [];
-        this.product = response.result as Product;
-        var date = this.product.dateCreatedProduct;
-        var newDate = date.split("/").reverse().join("-");
-        this.product.dateCreatedProduct = newDate;
-        this.listProduct();
-        this.emptyForm();
+        handleResponse(response);
       });
     } else {
-      this.service.save(this.productDTO).subscribe((response: any) => {
-        this.success = true;
-        this.errors = [];
-        this.product = response.result as Product;
-        var date = this.product.dateCreatedProduct;
-        var newDate = date.split("/").reverse().join("-");
-        this.product.dateCreatedProduct = newDate;
-        this.listProduct();
-        this.emptyForm();
+      const newProduct: ProductDTO = {
+        ...this.productDTO,
+        idProduct: '', 
+        idCategory: this.productDTO.idCategory
+      };
+  
+      this.service.save(newProduct).subscribe((response: any) => {
+        handleResponse(response);
       });
     }
   }
@@ -123,19 +130,20 @@ export class ProductComponent {
 
   findProduct(product: Product) {
     this.service.findById(product.idProduct).subscribe((response: any) => {
-      this.product = response.result as Product;
-      this.productDTO.idProduct = this.product.idProduct;
-      this.productDTO.nameProduct = this.product.nameProduct;
-      this.productDTO.descriptionProduct = this.product.descriptionProduct;
-      this.productDTO.costPriceProduct = this.product.costPriceProduct;
-      this.productDTO.amountProduct = this.product.amountProduct;
-      var date = this.product.dateCreatedProduct;
-      var newDate = date.split("/").reverse().join("-");
-      this.productDTO.dateCreatedProduct = newDate;
-      this.productDTO.idCategory = this.product.category?.idCategory;
+      const { idProduct, nameProduct, descriptionProduct, costPriceProduct, amountProduct, dateCreatedProduct, category } = response.result as Product;
+      this.productDTO = {
+        idProduct,
+        nameProduct,
+        descriptionProduct,
+        costPriceProduct,
+        amountProduct,
+        dateCreatedProduct: dateCreatedProduct.split("/").reverse().join("-"),
+        idCategory: category?.idCategory
+      };
       this.success = false;
     });
   }
+  
 
   emptyForm() {
     this.productForm.resetForm();

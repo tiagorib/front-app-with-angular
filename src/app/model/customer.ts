@@ -4,7 +4,7 @@ export interface Customer {
     lastNameCustomer: string;
     cpfCustomer: any;
     birthdateCustomer: any;
-    dateCreatedCustomer: any;
+    dataCreatedCustomer: any;
     monthlyIncomeCustomer: string;
     statusCustomer: boolean;
     emailCustomer: string;
